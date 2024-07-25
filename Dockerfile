@@ -5,31 +5,24 @@ FROM ubuntu:latest AS build
 RUN apt-get update && apt-get install -y \
     openjdk-17-jdk \
     wget \
-    unzip \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    unzip
 
 # Установка Gradle (если его нет в проекте)
 RUN wget https://services.gradle.org/distributions/gradle-7.2-bin.zip \
     && unzip gradle-7.2-bin.zip \
-    && mv gradle-7.2 /opt/gradle \
-    && rm gradle-7.2-bin.zip
+    && mv gradle-7.2 /opt/gradle
 
 # Установка переменной окружения для Gradle
 ENV PATH=/opt/gradle/bin:$PATH
 
-# Копирование файлов проекта в контейнер
-COPY gradlew /build/
-COPY gradle /build/gradle
-COPY src /build/src
-COPY build.gradle /build/
+# Копирование всех файлов проекта в контейнер
+COPY . .
 
 # Установка разрешений на выполнение для gradlew
-RUN chmod +x /build/gradlew
+RUN chmod +x ./gradlew
 
 # Сборка JAR файла с использованием Gradle
-WORKDIR /build
-RUN ./gradlew bootJar --no-daemon --parallel
+RUN ./gradlew bootJar --no-daemon
 
 # Второй этап, более легкий образ для запуска
 FROM openjdk:17-jdk-slim
