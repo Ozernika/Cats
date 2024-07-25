@@ -1,37 +1,22 @@
-# Первый этап сборки
-FROM ubuntu:latest AS build
+# Первый этап сборки зависимостей
+FROM openjdk:17-jdk-slim AS dependencies
 
-# Обновление списка пакетов и установка необходимых инструментов
-RUN apt-get update && apt-get install -y \
-    openjdk-17-jdk \
-    wget \
-    unzip
+WORKDIR /app
+COPY build.gradle settings.gradle ./
+RUN ./gradlew dependencies
 
-# Установка Gradle (если его нет в проекте)
-RUN wget https://services.gradle.org/distributions/gradle-7.2-bin.zip \
-    && unzip gradle-7.2-bin.zip \
-    && mv gradle-7.2 /opt/gradle
+# Второй этап сборки
+FROM openjdk:17-jdk-slim AS build
 
-# Установка переменной окружения для Gradle
-ENV PATH=/opt/gradle/bin:$PATH
-
-# Копирование всех файлов проекта в контейнер
-COPY . .
-
-# Установка разрешений на выполнение для gradlew
-RUN chmod +x ./gradlew
-
-# Сборка JAR файла с использованием Gradle
+WORKDIR /app
+COPY --from=dependencies /app/build.gradle /app/
+COPY src /app/src
+COPY build.gradle settings.gradle ./
 RUN ./gradlew bootJar --no-daemon
 
-# Второй этап, более легкий образ для запуска
+# Финальный этап
 FROM openjdk:17-jdk-slim
 
-# Открытие порта 8080
 EXPOSE 8080
-
-# Копирование JAR файла из первого этапа
-COPY --from=build /build/libs/Test-0.0.1-SNAPSHOT.jar app.jar
-
-# Определение команды для запуска приложения
+COPY --from=build /app/build/libs/Test-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
