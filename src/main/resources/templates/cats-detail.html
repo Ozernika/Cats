@@ -1,0 +1,46 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<body class="d-flex flex-column">
+    <section layout:fragment="body">
+        <header class="bg-light border-bottom mb-4">
+        </header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" th:src="${cat.photoUrl}" alt="..." width="850" height="650"/></a>
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3 th:text="${cat.name}"></h3>
+                        </div>
+                        <div class="card-body">
+                            <p style="font-size: 1.3em; font-style: italic;" th:text="${cat.content}"></p>
+                            <p>Пол: <span th:text="${cat.gender}"></span></p>
+                            <p>Возраст: <span th:text="${cat.age}"></span></p>
+                            <p>Волонтёр: <span th:text="${cat.volunteer}"></span></p>
+                            <p>Номер телефона: <span style="font-weight: bold;" th:text="${cat.phone}"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+<section layout:fragment="footer" class="bg-dark py-4 mt-auto">
+    <div class="container px-5">
+        <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+            <div class="col-auto"><div class="small m-0 text-white">Работа студентки ИКБО-30-22 Вероники Озерной</div></div>
+            <div class="col-auto">
+                <a class="link-light small" href="mailto:nikaozer@gmail.com">Связаться</a>
+            </div>
+        </div>
+    </div>
+</section>
+</html>

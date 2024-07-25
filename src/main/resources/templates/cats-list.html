@@ -1,0 +1,47 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+
+    <section layout:fragment="body" class="py-5">
+        <div class="container px-5 my-5">
+            <div th:if="${param.success}" class="altert alert-success">
+                Вы зарегистрировались успешно!
+            </div>
+            <div class="text-center mb-5">
+                <h1 class="fw-bolder">Возьми из приюта, не покупай!</h1>
+                <p class="lead fw-normal text-muted mb-0">Наши милые котики ждут хозяина!</p>
+            </div>
+            <div class="row gx-5">
+                <div>
+                    <form th:action="@{/cats/search}" class="form-inline my-2 my-lg-0 mb-3">
+                        <input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Найти котика" aria-label="Search">
+                    </form>
+                </div>
+                <div th:each="cat :${cats}" class="col-lg-6">
+                    <div class="position-relative mb-5">
+                        <img class="img-fluid rounded-3 mb-3" th:src="${cat.photoUrl}" alt="..." />
+                        <div th:text="${cat.name}" class="h3 fw-bolder text-decoration-none"></div>
+                        <a class="btn btn-primary" th:href="@{/cats/{catId}(catId=${cat.id})}">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+<section layout:fragment="footer" class="bg-dark py-4 mt-auto">
+    <div class="container px-5">
+        <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+            <div class="col-auto"><div class="small m-0 text-white">Работа студентки ИКБО-30-22 Вероники Озерной</div></div>
+            <div class="col-auto">
+                <a class="link-light small" href="mailto:nikaozer@gmail.com">Связаться</a>
+            </div>
+        </div>
+    </div>
+</section>
+</html>
+

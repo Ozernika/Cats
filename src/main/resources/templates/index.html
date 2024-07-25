@@ -1,0 +1,36 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<body class="d-flex flex-column">
+<section layout:fragment="body">
+    <header class="bg-light">
+
+    </header>
+    <div class="intro" style="position: relative; display: flex; align-items: center; justify-content: center; height: 100vh;">
+        <div class="intro__media" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; background-size: cover;">
+            <img src="https://i.pinimg.com/564x/d7/db/61/d7db619673b9d96aeaced7d4624c48c1.jpg" style="position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; object-fit: cover; transform: translate(-50%, -50%);">
+            <div style="position: absolute; top: 0; left: 0; z-index: 5; width: 100%; height: 100%; content: ''; background-color: rgba(0, 0, 0, .5);"></div>
+        </div>
+        <div class="intro__content" style="z-index: 10; color: aliceblue; text-align: center;">
+            <h1>CatShelter</h1> <br>
+            <h3>
+                Возьми котика из приюта!
+            </h3>
+        </div>
+    </div>
+
+</section>
+
+</body>
+<section layout:fragment="footer" class="bg-dark py-4 mt-auto">
+    <div class="container px-5">
+        <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+            <div class="col-auto"><div class="small m-0 text-white">Работа студентки ИКБО-30-22 Вероники Озерной</div></div>
+            <div class="col-auto">
+                <a class="link-light small" href="mailto:nikaozer@gmail.com">Связаться</a>
+            </div>
+        </div>
+    </div>
+</section>
+</html>
